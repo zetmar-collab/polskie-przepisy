@@ -76,3 +76,18 @@ W pliku `js/recipes.js` dopisz obiekt do tablicy `RECIPES`:
 - Lista zakupów jest zapisywana lokalnie w przeglądarce (localStorage).
 - Przyciski AI kopiują przepis do schowka — jeśli model nie wczyta treści
   automatycznie, wystarczy wkleić ją skrótem **Ctrl + V**.
+
+## ⚖️ Licencja
+
+**Kod źródłowy — [MIT](LICENSE).** Możesz go używać, modyfikować i rozpowszechniać,
+także komercyjnie, zachowując informację o autorstwie. Obejmuje `index.html`,
+`css/`, `js/app.js` oraz cały katalog `store/` (host aplikacji, manifest MSIX,
+skrypty budowania).
+
+**Baza przepisów** (`js/recipes.js`) oraz **ikony i grafiki** (`icons/`,
+`store/assets/`) — © Marek Zettel, wszelkie prawa zastrzeżone. Nie są objęte
+licencją MIT; ich wykorzystanie wymaga zgody autora.
+
+**`LICENCJA.txt`** to umowa licencyjna użytkownika końcowego (EULA) dołączana do
+gotowej aplikacji dla jej odbiorców. Nie dotyczy korzystania z kodu źródłowego
+z tego repozytorium — tu obowiązuje MIT.

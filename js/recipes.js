@@ -1,4 +1,6 @@
 // Baza przepisów - Książka Kucharska
+// © Marek Zettel — wszelkie prawa zastrzeżone.
+// Treść przepisów nie jest objęta licencją MIT, która dotyczy kodu aplikacji.
 // Pola: id, title, category (obiady|salatki|desery|ciasta),
 //       age (dzieci|mlodzi|dorosli|seniorzy), time (minuty), ingredients[], steps[]
 //
