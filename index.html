@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Książka kucharska - 200 przepisów dla każdej grupy wiekowej">
+  <title>Książka Kucharska — 200 przepisów</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body>
+  <!-- Nagłówek -->
+  <header class="header">
+    <div class="header__top">
+      <h1 class="header__title">🍲 Książka Kucharska</h1>
+      <button id="toggleShopping" class="btn btn--accent" aria-label="Pokaż listę zakupów">
+        🛒 Lista zakupów <span id="cartCount" class="cart-count">0</span>
+      </button>
+    </div>
+    <p class="header__subtitle">200 przepisów dla każdego — od maluchów po seniorów</p>
+
+    <!-- Wyszukiwarka -->
+    <div class="search">
+      <input type="search" id="searchInput" class="search__input"
+             placeholder="🔍 Szukaj przepisu lub składnika..." aria-label="Wyszukiwarka przepisów">
+    </div>
+  </header>
+
+  <!-- Filtry -->
+  <section class="filters" aria-label="Filtry">
+    <div class="filters__group">
+      <span class="filters__label">Kategoria:</span>
+      <div class="filters__buttons" id="categoryFilters">
+        <button class="chip chip--active" data-filter="category" data-value="all">Wszystkie</button>
+        <button class="chip" data-filter="category" data-value="obiady">🍝 Obiady</button>
+        <button class="chip" data-filter="category" data-value="salatki">🥗 Sałatki</button>
+        <button class="chip" data-filter="category" data-value="desery">🍮 Desery</button>
+        <button class="chip" data-filter="category" data-value="ciasta">🍰 Ciasta</button>
+        <button class="chip" data-filter="category" data-value="swieta">🎄 Święta</button>
+      </div>
+    </div>
+
+    <!-- Podgrupy świąteczne (widoczne po wybraniu kategorii Święta) -->
+    <div class="filters__group" id="holidayGroup" hidden>
+      <span class="filters__label">Święta:</span>
+      <div class="filters__buttons" id="holidayFilters">
+        <button class="chip chip--active" data-filter="holiday" data-value="all">Wszystkie</button>
+        <button class="chip" data-filter="holiday" data-value="wielkanoc">🐣 Wielkanoc</button>
+        <button class="chip" data-filter="holiday" data-value="boze-narodzenie">🎄 Boże Narodzenie</button>
+      </div>
+    </div>
+    <div class="filters__group">
+      <span class="filters__label">Grupa wiekowa:</span>
+      <div class="filters__buttons" id="ageFilters">
+        <button class="chip chip--active" data-filter="age" data-value="all">Wszystkie</button>
+        <button class="chip" data-filter="age" data-value="dzieci">👶 3–18 lat</button>
+        <button class="chip" data-filter="age" data-value="mlodzi">🧑 20–40 lat</button>
+        <button class="chip" data-filter="age" data-value="dorosli">🧓 40–60 lat</button>
+        <button class="chip" data-filter="age" data-value="seniorzy">👵 Seniorzy 60+</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Informacja o liczbie wyników -->
+  <p id="resultsInfo" class="results-info"></p>
+
+  <!-- Siatka przepisów -->
+  <main id="recipesGrid" class="recipes-grid" aria-live="polite"></main>
+
+  <!-- Komunikat o braku wyników -->
+  <p id="noResults" class="no-results" hidden>Brak przepisów spełniających kryteria 😔</p>
+
+  <!-- Modal przepisu -->
+  <div id="recipeModal" class="modal" hidden>
+    <div class="modal__overlay" data-close-modal></div>
+    <div class="modal__content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" data-close-modal aria-label="Zamknij">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Panel listy zakupów -->
+  <aside id="shoppingPanel" class="shopping-panel" hidden>
+    <div class="shopping-panel__header">
+      <h2>🛒 Lista zakupów</h2>
+      <button class="modal__close" id="closeShopping" aria-label="Zamknij">✕</button>
+    </div>
+    <ul id="shoppingList" class="shopping-list"></ul>
+    <p id="shoppingEmpty" class="shopping-empty">Lista jest pusta. Dodaj składniki z przepisów.</p>
+    <div class="shopping-panel__actions">
+      <button id="exportShopping" class="btn btn--primary">⬇️ Pobierz jako .txt</button>
+      <button id="clearShopping" class="btn btn--ghost">🗑️ Wyczyść</button>
+    </div>
+  </aside>
+  <div id="shoppingOverlay" class="shopping-overlay" hidden></div>
+
+  <footer class="footer">
+    <p>Książka Kucharska · 200 przepisów · Przygotuj, kopiuj, modyfikuj z AI 🤖</p>
+  </footer>
+
+  <script src="js/recipes.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

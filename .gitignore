@@ -1,0 +1,23 @@
+# Systemowe
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Edytory
+.vscode/
+.idea/
+*.swp
+
+# Zależności (gdyby kiedyś doszły)
+node_modules/
+
+# Logi
+*.log
+
+# Pakiet MS Store
+store/build/
+store/out/
+store/src/bin/
+store/src/obj/
+store/src/wwwroot/
+store/src/WebView2Runtime/

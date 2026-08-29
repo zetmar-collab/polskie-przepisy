@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Książka Kucharska
+Comment=200+ przepisów kulinarnych
+# WAŻNE: podmień /SCIEZKA/DO/PROJEKTU na rzeczywistą ścieżkę do folderu z aplikacją
+Exec=bash "/SCIEZKA/DO/PROJEKTU/Uruchom-Ksiazke-Linux.sh"
+Icon=/SCIEZKA/DO/PROJEKTU/icons/icon.png
+Terminal=false
+Categories=Utility;

@@ -1,0 +1,62 @@
+================================================================
+  KSIĄŻKA KUCHARSKA PRO — LICENCJA UŻYTKOWNIKA KOŃCOWEGO (EULA)
+================================================================
+
+Dziękujemy za zakup aplikacji "Książka Kucharska PRO".
+Poniższe warunki określają zasady korzystania z produktu.
+
+----------------------------------------------------------------
+1. PRZEDMIOT LICENCJI
+----------------------------------------------------------------
+Produkt obejmuje pliki aplikacji (HTML, CSS, JavaScript), bazę
+przepisów, ikony oraz skrypty uruchamiające, dostarczone w paczce
+ZIP.
+
+----------------------------------------------------------------
+2. ZAKRES DOZWOLONEGO UŻYCIA
+----------------------------------------------------------------
+- Licencja jest udzielana jednemu nabywcy do UŻYTKU WŁASNEGO
+  (osobistego, domowego, niekomercyjnego).
+- Możesz uruchamiać aplikację na swoich urządzeniach (komputer,
+  tablet, telefon) bez ograniczeń ilościowych w ramach własnego
+  gospodarstwa domowego.
+- Możesz wykonać kopię zapasową na własny użytek.
+
+----------------------------------------------------------------
+3. ZAKAZY
+----------------------------------------------------------------
+Bez pisemnej zgody autora ZABRANIA SIĘ:
+- dalszej odsprzedaży, wynajmu lub użyczania produktu,
+- udostępniania plików publicznie (internet, sieci P2P, chmura
+  publiczna) lub przekazywania osobom trzecim,
+- usuwania informacji o autorze i niniejszej licencji,
+- podawania się za autora produktu.
+
+----------------------------------------------------------------
+4. PRAWA AUTORSKIE
+----------------------------------------------------------------
+Wszelkie prawa autorskie do aplikacji i bazy przepisów pozostają
+przy autorze. Zakup uprawnia do korzystania, nie do przeniesienia
+praw autorskich.
+
+----------------------------------------------------------------
+5. GWARANCJA I ODPOWIEDZIALNOŚĆ
+----------------------------------------------------------------
+Produkt dostarczany jest "tak jak jest" (as-is). Autor dokłada
+starań, aby przepisy i aplikacja były poprawne, jednak nie ponosi
+odpowiedzialności za ewentualne szkody wynikłe z użytkowania
+(np. alergie, błędy w przygotowaniu potraw). Przed gotowaniem
+zweryfikuj składniki pod kątem alergii i indywidualnych potrzeb.
+
+----------------------------------------------------------------
+6. DANE I PRYWATNOŚĆ
+----------------------------------------------------------------
+Aplikacja działa lokalnie. Lista zakupów zapisywana jest wyłącznie
+w pamięci przeglądarki na Twoim urządzeniu. Przyciski AI otwierają
+zewnętrzne serwisy (ChatGPT, Gemini i in.) — obowiązują tam ich
+własne regulaminy i polityki prywatności.
+
+----------------------------------------------------------------
+Korzystając z produktu, akceptujesz powyższe warunki.
+Smacznego! 🍽️
+================================================================

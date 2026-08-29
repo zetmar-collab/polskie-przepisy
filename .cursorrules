@@ -1,0 +1,30 @@
+# Projekt: Książka Kucharska (aplikacja webowa)
+
+## Cel
+Statyczna aplikacja HTML/CSS/JS (bez backendu) prezentująca 200 przepisów
+kulinarnych podzielonych na 4 grupy wiekowe i 4 kategorie dań.
+
+## Stack
+- Czysty HTML5, CSS3, JavaScript (Vanilla JS, ES6+)
+- Brak frameworków, brak buildu — działa po otwarciu index.html
+- Dane przepisów w js/recipes.js jako tablica obiektów
+
+## Funkcje
+- Wyszukiwarka (nazwa + składniki)
+- Filtry: kategoria (obiady, sałatki, desery, ciasta) i grupa wiekowa
+- Lista zakupów z eksportem do pliku .txt
+- Kopiowanie przepisu do schowka
+- Przyciski do modeli AI (ChatGPT, Claude, Gemini, Perplexity, Copilot)
+- Pełna responsywność (PC + mobile)
+- Kolorystyka przyjazna dla oka (ciepłe, stonowane barwy)
+
+## Konwencje
+- Komentarze i UI w języku polskim
+- Nazewnictwo: camelCase w JS, kebab-case w klasach CSS
+- ZAKAZ: console.log w finalnym kodzie produkcyjnym
+- Kod ma być czytelny, bez zbędnych zależności
+
+## Czego NIE robić
+- Nie dodawać backendu ani bazy danych
+- Nie używać zewnętrznych bibliotek JS (jQuery, React itp.)
+- Nie łamać responsywności
