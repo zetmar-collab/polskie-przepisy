@@ -15,6 +15,9 @@ kulinarnymi podzielonymi na grupy wiekowe i kategorie dań.
   - 🧑 młodzi dorośli (20–40 lat)
   - 🧓 dorośli (40–60 lat)
   - 👵 seniorzy (60+)
+- 📒 **Własne przepisy** — dopisz przepisy z zeszytu do swojej bazy; edytuj, usuwaj
+  i zapisuj kopię zapasową do pliku `.json` (działa też jako przeniesienie bazy
+  na inny komputer). Wbudowany przepis można zapisać jako własną, edytowalną wersję.
 - 🔍 **Wyszukiwarka** — po nazwie przepisu i po składnikach
 - 🎚️ **Filtry** — kategoria + grupa wiekowa
 - 🛒 **Lista zakupów** — dodawanie składników i **eksport do pliku `.txt`** (lista zapisuje się w przeglądarce)
@@ -53,6 +56,7 @@ Ksiazka-kucharska/
 │   └── styles.css      # style + responsywność
 ├── js/
 │   ├── recipes.js      # baza 232 przepisów (dane)
+│   ├── my-recipes.js   # własne przepisy: zapis, walidacja, kopia zapasowa
 │   └── app.js          # logika aplikacji
 ├── .cursorrules        # kontekst projektu
 └── README.md

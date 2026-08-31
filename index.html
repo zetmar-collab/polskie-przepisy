@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Książka kucharska - 200 przepisów dla każdej grupy wiekowej">
-  <title>Książka Kucharska — 200 przepisów</title>
+  <meta name="description" content="Książka kucharska - 232 przepisy dla każdej grupy wiekowej, z możliwością dodawania własnych">
+  <title>Książka Kucharska — 232 przepisy</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
@@ -13,11 +13,14 @@
   <header class="header">
     <div class="header__top">
       <h1 class="header__title">🍲 Książka Kucharska</h1>
-      <button id="toggleShopping" class="btn btn--accent" aria-label="Pokaż listę zakupów">
-        🛒 Lista zakupów <span id="cartCount" class="cart-count">0</span>
-      </button>
+      <div class="header__actions">
+        <button id="addRecipeBtn" class="btn btn--primary">➕ Dodaj przepis</button>
+        <button id="toggleShopping" class="btn btn--accent" aria-label="Pokaż listę zakupów">
+          🛒 Lista zakupów <span id="cartCount" class="cart-count">0</span>
+        </button>
+      </div>
     </div>
-    <p class="header__subtitle">200 przepisów dla każdego — od maluchów po seniorów</p>
+    <p class="header__subtitle">232 przepisy dla każdego — od maluchów po seniorów</p>
 
     <!-- Wyszukiwarka -->
     <div class="search">
@@ -37,6 +40,7 @@
         <button class="chip" data-filter="category" data-value="desery">🍮 Desery</button>
         <button class="chip" data-filter="category" data-value="ciasta">🍰 Ciasta</button>
         <button class="chip" data-filter="category" data-value="swieta">🎄 Święta</button>
+        <button class="chip" data-filter="category" data-value="moje">📒 Moje</button>
       </div>
     </div>
 
@@ -61,6 +65,16 @@
     </div>
   </section>
 
+  <!-- Pasek własnej bazy przepisów (widoczny przy filtrze „Moje") -->
+  <section id="myRecipesBar" class="my-bar" hidden aria-label="Moje przepisy">
+    <p id="myRecipesInfo" class="my-bar__info"></p>
+    <div class="my-bar__actions">
+      <button id="exportMyRecipes" class="btn btn--ghost">⬇️ Zapisz kopię (.json)</button>
+      <button id="importMyRecipes" class="btn btn--ghost">⬆️ Wczytaj kopię</button>
+      <input type="file" id="importMyRecipesFile" accept="application/json,.json" hidden>
+    </div>
+  </section>
+
   <!-- Informacja o liczbie wyników -->
   <p id="resultsInfo" class="results-info"></p>
 
@@ -76,6 +90,75 @@
     <div class="modal__content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal__close" data-close-modal aria-label="Zamknij">✕</button>
       <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Modal formularza własnego przepisu -->
+  <div id="recipeFormModal" class="modal" hidden>
+    <div class="modal__overlay" data-close-form></div>
+    <div class="modal__content" role="dialog" aria-modal="true" aria-labelledby="recipeFormTitle">
+      <button class="modal__close" data-close-form aria-label="Zamknij">✕</button>
+      <h2 class="recipe__title" id="recipeFormTitle">➕ Nowy przepis</h2>
+
+      <form id="recipeForm" class="recipe-form" novalidate>
+        <label class="recipe-form__field">
+          <span class="recipe-form__label">Nazwa potrawy <span class="recipe-form__req">*</span></span>
+          <input type="text" id="formName" class="recipe-form__input" maxlength="120"
+                 placeholder="np. Ciasto babci Zosi" autocomplete="off">
+        </label>
+
+        <div class="recipe-form__row">
+          <label class="recipe-form__field">
+            <span class="recipe-form__label">Kategoria</span>
+            <select id="formCategory" class="recipe-form__input">
+              <option value="obiady">🍝 Obiad</option>
+              <option value="salatki">🥗 Sałatka</option>
+              <option value="desery">🍮 Deser</option>
+              <option value="ciasta">🍰 Ciasto</option>
+            </select>
+          </label>
+
+          <label class="recipe-form__field">
+            <span class="recipe-form__label">Grupa wiekowa</span>
+            <select id="formAge" class="recipe-form__input">
+              <option value="dzieci">👶 3–18 lat</option>
+              <option value="mlodzi">🧑 20–40 lat</option>
+              <option value="dorosli">🧓 40–60 lat</option>
+              <option value="seniorzy">👵 Seniorzy 60+</option>
+            </select>
+          </label>
+
+          <label class="recipe-form__field recipe-form__field--narrow">
+            <span class="recipe-form__label">Czas (min)</span>
+            <input type="number" id="formTime" class="recipe-form__input" min="1" max="1440" value="30">
+          </label>
+        </div>
+
+        <label class="recipe-form__field">
+          <span class="recipe-form__label">
+            Składniki <span class="recipe-form__req">*</span>
+            <em class="recipe-form__hint">— jeden składnik w każdej linii</em>
+          </span>
+          <textarea id="formIngredients" class="recipe-form__input recipe-form__textarea" rows="7"
+                    placeholder="500 g mąki&#10;2 jajka&#10;szklanka mleka&#10;szczypta soli"></textarea>
+        </label>
+
+        <label class="recipe-form__field">
+          <span class="recipe-form__label">
+            Sposób przygotowania <span class="recipe-form__req">*</span>
+            <em class="recipe-form__hint">— jeden krok w każdej linii</em>
+          </span>
+          <textarea id="formSteps" class="recipe-form__input recipe-form__textarea" rows="8"
+                    placeholder="Wymieszaj suche składniki.&#10;Dodaj jajka i mleko, wyrób ciasto.&#10;Piecz 40 minut w 180°C."></textarea>
+        </label>
+
+        <p id="formError" class="recipe-form__error" role="alert" hidden></p>
+
+        <div class="recipe__actions">
+          <button type="submit" class="btn btn--primary">💾 Zapisz przepis</button>
+          <button type="button" class="btn btn--ghost" data-close-form>Anuluj</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -95,10 +178,11 @@
   <div id="shoppingOverlay" class="shopping-overlay" hidden></div>
 
   <footer class="footer">
-    <p>Książka Kucharska · 200 przepisów · Przygotuj, kopiuj, modyfikuj z AI 🤖</p>
+    <p>Książka Kucharska · 232 przepisy · Dopisz własne, kopiuj, modyfikuj z AI 🤖</p>
   </footer>
 
   <script src="js/recipes.js"></script>
+  <script src="js/my-recipes.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

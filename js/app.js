@@ -64,12 +64,42 @@
   const shoppingEmpty = document.getElementById("shoppingEmpty");
   const cartCount = document.getElementById("cartCount");
 
+  // Formularz własnego przepisu
+  const formModal = document.getElementById("recipeFormModal");
+  const recipeForm = document.getElementById("recipeForm");
+  const recipeFormTitle = document.getElementById("recipeFormTitle");
+  const formError = document.getElementById("formError");
+  const formFields = {
+    name: document.getElementById("formName"),
+    category: document.getElementById("formCategory"),
+    age: document.getElementById("formAge"),
+    time: document.getElementById("formTime"),
+    ingredients: document.getElementById("formIngredients"),
+    steps: document.getElementById("formSteps"),
+  };
+  // id edytowanego przepisu; null oznacza dodawanie nowego
+  let editedRecipeId = null;
+
+  // Pasek własnej bazy
+  const myRecipesBar = document.getElementById("myRecipesBar");
+  const myRecipesInfo = document.getElementById("myRecipesInfo");
+  const importFileInput = document.getElementById("importMyRecipesFile");
+
   // ===================== RENDEROWANIE =====================
+
+  // Wbudowana baza wraz z przepisami dopisanymi przez użytkownika
+  function getAllRecipes() {
+    return RECIPES.concat(MyRecipes.all());
+  }
 
   function getFilteredRecipes() {
     const q = state.query.trim().toLowerCase();
-    return RECIPES.filter((r) => {
-      if (state.category !== "all" && r.category !== state.category) return false;
+    return getAllRecipes().filter((r) => {
+      if (state.category === "moje") {
+        if (!r.own) return false;
+      } else if (state.category !== "all" && r.category !== state.category) {
+        return false;
+      }
       if (state.age !== "all" && r.age !== state.age) return false;
       if (state.holiday !== "all" && r.holiday !== state.holiday) return false;
       if (q) {
@@ -84,6 +114,7 @@
   // Buduje odznaki (kategoria/święto/typ dania + grupa wiekowa) wspólne dla karty i modala
   function buildBadges(r) {
     const badges = [];
+    if (r.own) badges.push('<span class="badge badge--own">📒 Mój przepis</span>');
     if (r.holiday) {
       badges.push(`<span class="badge badge--holiday">${HOLIDAY_LABELS[r.holiday]}</span>`);
       if (r.dish) badges.push(`<span class="badge badge--cat">${escapeHtml(r.dish)}</span>`);
@@ -98,7 +129,7 @@
     const list = getFilteredRecipes();
     grid.innerHTML = "";
 
-    resultsInfo.textContent = `Znaleziono ${list.length} z ${RECIPES.length} przepisów`;
+    resultsInfo.textContent = `Znaleziono ${list.length} z ${getAllRecipes().length} przepisów`;
     noResults.hidden = list.length !== 0;
 
     const fragment = document.createDocumentFragment();
@@ -128,7 +159,7 @@
   // ===================== MODAL PRZEPISU =====================
 
   function openRecipe(id) {
-    const r = RECIPES.find((x) => x.id === id);
+    const r = getAllRecipes().find((x) => x.id === id);
     if (!r) return;
 
     const ingredientsHtml = r.ingredients
@@ -141,6 +172,11 @@
     const aiButtonsHtml = AI_MODELS
       .map((m) => `<button class="ai-btn" data-ai="${m.name}">${m.icon} ${m.name}</button>`)
       .join("");
+
+    const ownActionsHtml = r.own
+      ? `<button class="btn btn--ghost" id="editRecipe">✏️ Edytuj</button>
+         <button class="btn btn--danger" id="deleteRecipe">🗑️ Usuń</button>`
+      : `<button class="btn btn--ghost" id="cloneRecipe">📄 Zapisz jako mój przepis</button>`;
 
     const imageButtonsHtml = IMAGE_AI_MODELS
       .map((m) => `<button class="ai-btn ai-btn--image" data-image-ai="${m.name}">${m.icon} ${m.name}</button>`)
@@ -163,6 +199,7 @@
         <button class="btn btn--primary" id="addToShopping">🛒 Dodaj składniki do listy</button>
         <button class="btn btn--ghost" id="copyRecipe">📋 Kopiuj przepis</button>
         <button class="btn btn--accent" id="printRecipe">🖨️ Drukuj</button>
+        ${ownActionsHtml}
       </div>
 
       <div class="ai-section">
@@ -200,6 +237,15 @@
     modalBody.querySelectorAll("[data-image-ai]").forEach((btn) => {
       btn.addEventListener("click", () => visualizeRecipe(btn.dataset.imageAi, r));
     });
+
+    const editBtn = modalBody.querySelector("#editRecipe");
+    if (editBtn) editBtn.addEventListener("click", () => openRecipeForm(r));
+
+    const deleteBtn = modalBody.querySelector("#deleteRecipe");
+    if (deleteBtn) deleteBtn.addEventListener("click", () => deleteOwnRecipe(r));
+
+    const cloneBtn = modalBody.querySelector("#cloneRecipe");
+    if (cloneBtn) cloneBtn.addEventListener("click", () => openRecipeForm(r));
 
     modal.hidden = false;
     document.body.style.overflow = "hidden";
@@ -283,6 +329,169 @@
     } else {
       showToast(`🖼️ Prompt obrazu skopiowany — otwieram ${model.name}. Wklej (Ctrl+V), jeśli treść się nie pojawi.`);
     }
+  }
+
+  // ===================== WŁASNE PRZEPISY =====================
+
+  // source: null - nowy przepis, przepis własny - edycja, wbudowany - kopia do bazy użytkownika
+  function openRecipeForm(source) {
+    const editing = Boolean(source && source.own);
+    editedRecipeId = editing ? source.id : null;
+
+    recipeFormTitle.textContent = editing ? "✏️ Edytuj przepis" : "➕ Nowy przepis";
+    formFields.name.value = source
+      ? (editing ? source.title : `${source.title} (moja wersja)`)
+      : "";
+    // Kategoria "swieta" nie istnieje w formularzu - kopie świątecznych trafiają do obiadów
+    formFields.category.value =
+      source && MyRecipes.CATEGORIES.indexOf(source.category) !== -1 ? source.category : "obiady";
+    formFields.age.value = source ? source.age : "dorosli";
+    formFields.time.value = source ? source.time : 30;
+    formFields.ingredients.value = source ? source.ingredients.join("\n") : "";
+    formFields.steps.value = source ? source.steps.join("\n") : "";
+
+    hideFormError();
+    closeModal();
+    formModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    formFields.name.focus();
+  }
+
+  function closeRecipeForm() {
+    formModal.hidden = true;
+    editedRecipeId = null;
+    document.body.style.overflow = "";
+  }
+
+  function submitRecipeForm(e) {
+    e.preventDefault();
+
+    const data = {
+      title: formFields.name.value,
+      category: formFields.category.value,
+      age: formFields.age.value,
+      time: formFields.time.value,
+      ingredients: formFields.ingredients.value,
+      steps: formFields.steps.value,
+    };
+
+    if (!data.title.trim()) {
+      showFormError("Podaj nazwę potrawy.");
+      return;
+    }
+    if (!hasAnyLine(data.ingredients)) {
+      showFormError("Dodaj przynajmniej jeden składnik — każdy w osobnej linii.");
+      return;
+    }
+    if (!hasAnyLine(data.steps)) {
+      showFormError("Opisz przynajmniej jeden krok przygotowania — każdy w osobnej linii.");
+      return;
+    }
+
+    const wasEditing = editedRecipeId;
+    const result = wasEditing ? MyRecipes.update(wasEditing, data) : MyRecipes.add(data);
+    if (!result.ok) {
+      showFormError(saveErrorMessage(result.error));
+      return;
+    }
+
+    closeRecipeForm();
+    renderRecipes();
+    updateMyRecipesBar();
+    showToast(wasEditing ? "✅ Zapisano zmiany" : "✅ Przepis dodany do Twojej bazy");
+  }
+
+  function deleteOwnRecipe(r) {
+    const confirmed = window.confirm(
+      `Usunąć przepis „${r.title}"?\n\nTej operacji nie można cofnąć.`
+    );
+    if (!confirmed) return;
+
+    const result = MyRecipes.remove(r.id);
+    if (!result.ok) {
+      showToast("Nie udało się usunąć przepisu");
+      return;
+    }
+
+    closeModal();
+    renderRecipes();
+    updateMyRecipesBar();
+    showToast("🗑️ Przepis usunięty");
+  }
+
+  function hasAnyLine(value) {
+    return String(value).split("\n").some((line) => line.trim());
+  }
+
+  function showFormError(message) {
+    formError.textContent = message;
+    formError.hidden = false;
+  }
+
+  function hideFormError() {
+    formError.hidden = true;
+  }
+
+  function saveErrorMessage(error) {
+    if (error === "quota") {
+      return "Brak miejsca na kolejne przepisy. Zapisz kopię (.json), a potem usuń część wpisów.";
+    }
+    if (error === "storage") {
+      return "Nie udało się zapisać — na tym urządzeniu zapis danych jest zablokowany.";
+    }
+    return "Nie udało się zapisać przepisu. Sprawdź wypełnione pola.";
+  }
+
+  // ===================== KOPIA ZAPASOWA WŁASNEJ BAZY =====================
+
+  function updateMyRecipesBar() {
+    const count = MyRecipes.count();
+    myRecipesBar.hidden = state.category !== "moje";
+    myRecipesInfo.textContent = count
+      ? `📒 Twoja baza: ${count} ${recipeWord(count)}. Zapisz kopię, żeby nie stracić bazy przy reinstalacji.`
+      : "📒 Twoja baza jest pusta. Kliknij „➕ Dodaj przepis”, aby przepisać przepis z zeszytu.";
+  }
+
+  // Polska odmiana: 1 przepis, 2-4 przepisy, 5+ przepisów
+  function recipeWord(n) {
+    if (n === 1) return "przepis";
+    const last = n % 10;
+    const teens = n % 100;
+    if (last >= 2 && last <= 4 && (teens < 12 || teens > 14)) return "przepisy";
+    return "przepisów";
+  }
+
+  function exportMyRecipes() {
+    const result = MyRecipes.exportFile();
+    if (!result.ok) {
+      showToast("Twoja baza jest pusta — nie ma czego zapisywać");
+      return;
+    }
+    showToast(`⬇️ Zapisano kopię (${result.count} ${recipeWord(result.count)})`);
+  }
+
+  function importMyRecipes(file) {
+    MyRecipes.importFile(file).then((result) => {
+      if (!result.ok) {
+        showToast(importErrorMessage(result.error));
+        return;
+      }
+      if (!result.added) {
+        showToast("Wszystkie przepisy z pliku są już w Twojej bazie");
+        return;
+      }
+
+      renderRecipes();
+      updateMyRecipesBar();
+      const skipped = result.skipped ? `, pominięto ${result.skipped}` : "";
+      showToast(`⬆️ Wczytano ${result.added} ${recipeWord(result.added)}${skipped}`);
+    });
+  }
+
+  function importErrorMessage(error) {
+    if (error === "invalidfile") return "To nie jest plik z kopią przepisów";
+    if (error === "unreadable") return "Nie udało się odczytać pliku";
+    return saveErrorMessage(error);
   }
 
   // ===================== DRUKOWANIE =====================
@@ -496,6 +705,7 @@
       // Podgrupa świąteczna widoczna tylko dla kategorii "Święta"
       if (filterKey === "category") {
         toggleHolidayFilter(btn.dataset.value === "swieta");
+        updateMyRecipesBar();
       }
       renderRecipes();
     });
@@ -551,9 +761,28 @@
       showToast("🗑️ Wyczyszczono listę zakupów");
     });
 
+    // własne przepisy
+    document.getElementById("addRecipeBtn").addEventListener("click", () => openRecipeForm(null));
+    recipeForm.addEventListener("submit", submitRecipeForm);
+    formModal.querySelectorAll("[data-close-form]").forEach((el) =>
+      el.addEventListener("click", closeRecipeForm)
+    );
+
+    // kopia zapasowa własnej bazy
+    document.getElementById("exportMyRecipes").addEventListener("click", exportMyRecipes);
+    document.getElementById("importMyRecipes").addEventListener("click", () => importFileInput.click());
+    importFileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) importMyRecipes(file);
+      // wyczyszczenie pozwala wczytać ten sam plik ponownie
+      e.target.value = "";
+    });
+    updateMyRecipesBar();
+
     // Esc zamyka okna
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
+        if (!formModal.hidden) closeRecipeForm();
         if (!modal.hidden) closeModal();
         if (!shoppingPanel.hidden) closeShopping();
       }
