@@ -1,12 +1,15 @@
 # 🍲 Książka Kucharska
 
-Responsywna aplikacja webowa (HTML/CSS/JS, bez backendu) z **200 przepisami**
+[![Pobierz z Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://apps.microsoft.com/detail/9nr7twlxmw6b)
+
+Responsywna aplikacja webowa (HTML/CSS/JS, bez backendu) z **232 przepisami**
 kulinarnymi podzielonymi na grupy wiekowe i kategorie dań.
 
 ## ✨ Funkcje
 
-- **200 przepisów** — każdy zawiera składniki, sposób przygotowania i czas
+- **232 przepisy** — każdy zawiera składniki, sposób przygotowania i czas
 - **4 kategorie**: 🍝 Obiady · 🥗 Sałatki · 🍮 Desery · 🍰 Ciasta (po 50 przepisów)
+- **🎄 Dział świąteczny**: 34 przepisy — Wielkanoc (17) i Boże Narodzenie (17)
 - **4 grupy wiekowe**:
   - 👶 dzieci i młodzież (3–18 lat)
   - 🧑 młodzi dorośli (20–40 lat)
@@ -22,8 +25,8 @@ kulinarnymi podzielonymi na grupy wiekowe i kategorie dań.
 
 ## 🛒 Wersja dla Windows (Microsoft Store)
 
-Ta sama aplikacja jest wydana w Microsoft Store jako **Polskie Przepisy** —
-samodzielny pakiet MSIX z wbudowanym silnikiem stron, bez potrzeby instalowania
+Ta sama aplikacja jest wydana w Microsoft Store jako
+**[Polskie Przepisy](https://apps.microsoft.com/detail/9nr7twlxmw6b)** — bezpłatnie, samodzielny pakiet MSIX z wbudowanym silnikiem stron, bez potrzeby instalowania
 czegokolwiek dodatkowo. Kod hosta, manifest i skrypty budowania znajdziesz
 w katalogu [`store/`](store/), a instrukcję w [`store/README-SKLEP.md`](store/README-SKLEP.md).
 
@@ -49,7 +52,7 @@ Ksiazka-kucharska/
 ├── css/
 │   └── styles.css      # style + responsywność
 ├── js/
-│   ├── recipes.js      # baza 200 przepisów (dane)
+│   ├── recipes.js      # baza 232 przepisów (dane)
 │   └── app.js          # logika aplikacji
 ├── .cursorrules        # kontekst projektu
 └── README.md
