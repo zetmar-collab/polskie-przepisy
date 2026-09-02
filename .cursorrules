@@ -1,8 +1,9 @@
 # Projekt: Książka Kucharska (aplikacja webowa)
 
 ## Cel
-Statyczna aplikacja HTML/CSS/JS (bez backendu) prezentująca 232 przepisy
-kulinarne podzielone na 4 grupy wiekowe, 4 kategorie dań oraz dział świąteczny.
+Statyczna aplikacja HTML/CSS/JS (bez backendu) prezentująca 334 przepisy
+kulinarne podzielone na 4 grupy wiekowe, 4 kategorie dań, dział świąteczny
+oraz dział staropolski.
 
 ## Stack
 - Czysty HTML5, CSS3, JavaScript (Vanilla JS, ES6+)
@@ -11,7 +12,7 @@ kulinarne podzielone na 4 grupy wiekowe, 4 kategorie dań oraz dział świątecz
 
 ## Funkcje
 - Wyszukiwarka (nazwa + składniki)
-- Filtry: kategoria (obiady, sałatki, desery, ciasta, święta) i grupa wiekowa
+- Filtry: kategoria (obiady, sałatki, desery, ciasta, staropolskie, święta) i grupa wiekowa
 - Lista zakupów z eksportem do pliku .txt
 - Kopiowanie przepisu do schowka
 - Przyciski do modeli AI (ChatGPT, Claude, Gemini, Perplexity, Copilot)

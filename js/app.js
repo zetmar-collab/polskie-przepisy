@@ -11,6 +11,7 @@
     desery: "🍮 Deser",
     ciasta: "🍰 Ciasto",
     swieta: "🎄 Święta",
+    staropolskie: "🏺 Staropolskie",
   };
   const HOLIDAY_LABELS = {
     wielkanoc: "🐣 Wielkanoc",
@@ -120,6 +121,8 @@
       if (r.dish) badges.push(`<span class="badge badge--cat">${escapeHtml(r.dish)}</span>`);
     } else {
       badges.push(`<span class="badge badge--cat">${CATEGORY_LABELS[r.category]}</span>`);
+      // Przepisy staropolskie niosą podgrupę w polu dish
+      if (r.dish) badges.push(`<span class="badge badge--dish">${escapeHtml(r.dish)}</span>`);
     }
     badges.push(`<span class="badge badge--age">${AGE_LABELS[r.age]}</span>`);
     return badges.join("");

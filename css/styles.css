@@ -150,6 +150,7 @@ body {
 .badge--holiday { background: #b0524e; }
 .badge--time { background: var(--surface-alt); color: var(--text-soft); }
 .badge--own { background: #6b5b95; }
+.badge--dish { background: #8a7048; }
 
 .card__title { font-size: 1.15rem; font-weight: 700; color: var(--text); }
 .card__ingredients { font-size: .85rem; color: var(--text-soft); flex-grow: 1; }

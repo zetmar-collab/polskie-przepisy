@@ -2,14 +2,17 @@
 
 [![Pobierz z Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://apps.microsoft.com/detail/9nr7twlxmw6b)
 
-Responsywna aplikacja webowa (HTML/CSS/JS, bez backendu) z **232 przepisami**
+Responsywna aplikacja webowa (HTML/CSS/JS, bez backendu) z **334 przepisami**
 kulinarnymi podzielonymi na grupy wiekowe i kategorie dań.
 
 ## ✨ Funkcje
 
-- **232 przepisy** — każdy zawiera składniki, sposób przygotowania i czas
+- **334 przepisy** — każdy zawiera składniki, sposób przygotowania i czas
 - **4 kategorie**: 🍝 Obiady · 🥗 Sałatki · 🍮 Desery · 🍰 Ciasta (po 50 przepisów)
 - **🎄 Dział świąteczny**: 34 przepisy — Wielkanoc (17) i Boże Narodzenie (17)
+- **🏺 Staropolskie**: 102 receptury inspirowane kuchnią staropolską, m.in.
+  *Compendium ferculorum* z 1682 roku — zupy i polewki, dania mięsne i rybne,
+  kasze i warzywa, potrawy mączne, mleczne, wypieki oraz desery i dodatki
 - **4 grupy wiekowe**:
   - 👶 dzieci i młodzież (3–18 lat)
   - 🧑 młodzi dorośli (20–40 lat)
@@ -55,7 +58,7 @@ Ksiazka-kucharska/
 ├── css/
 │   └── styles.css      # style + responsywność
 ├── js/
-│   ├── recipes.js      # baza 232 przepisów (dane)
+│   ├── recipes.js      # baza 334 przepisów (dane)
 │   ├── my-recipes.js   # własne przepisy: zapis, walidacja, kopia zapasowa
 │   └── app.js          # logika aplikacji
 ├── .cursorrules        # kontekst projektu
